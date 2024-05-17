@@ -7,6 +7,9 @@ const session = require ('express-session');
 const mongoose = require ('mongoose');
 const flash = require ('connect-flash');
 
+const kafkaService = require('app/http/services/kafkaService');
+const influxService = require('app/http/services/influxService');
+
 
 module.exports = class Application {
     constructor () {
@@ -16,9 +19,20 @@ module.exports = class Application {
         this.setRouters();
     }
 
+    
+
+
     setupExpress() {
         const server = http.createServer(app);
         server.listen(config.port , () => console.log(`Listening on port ${config.port}...`));
+
+        // تعریف تابع پردازش پیام‌ها
+        const processMessage = async (data) => {
+            const { ts, name, value, tag } = data;
+            influxService.writePoint(name, { value }, { tag, ts });
+          };
+          
+        kafkaService.runConsumer(processMessage);
     }
 
     async setMongoConnection(){
