@@ -5,7 +5,6 @@ dotenv.config();
 const token = process.env.INFLUX_TOKEN;
 const org = process.env.INFLUX_ORG;
 const bucket = process.env.INFLUX_BUCKET;
-console.log(token)
 const client = new InfluxDB({ url: 'http://localhost:8086', token });
 
 const writeApi = client.getWriteApi(org, bucket, 'ns');

@@ -8,6 +8,7 @@ const connectionSchema = Schema({
     name : { type : String , required : true , unique: true },
     value : { type : Number , required : true },
     slug : { type : String , required : true },
+    ts: { type : String , required : true },
 } , { timestamps : true , toJson : { virtuals : true } });
 
 

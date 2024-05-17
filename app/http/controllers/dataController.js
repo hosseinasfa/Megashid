@@ -16,6 +16,7 @@ class dataController extends controller {
   
     try {
       await kafkaService.sendMessage({ ts, name, value, tag: 'my-tag' });
+      console.log('Data received and sent to Kafka')
       res.status(200).json({ message: 'Data received and sent to Kafka' });
     } catch (err) {
       res.status(500).json({ error: 'Failed to send data to Kafka' });
