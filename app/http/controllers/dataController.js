@@ -8,11 +8,6 @@ class dataController extends controller {
   async receiveData (req, res) {
     const { ts, name, value } = req.body;
 
-  
-  if (!ts || !name || !value) {
-    return res.status(400).json({ error: 'Invalid data format' });
-  }
-
   const dataWithTags = {
     ts,
     name,
