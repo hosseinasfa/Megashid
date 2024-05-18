@@ -21,6 +21,7 @@ router.delete('/delete/:id' , connectionController.destroy);
 router.get('/' , connectionController.getAllConnections);
 router.post('/data/:connectionName', dataValidator.handle() , dataController.receiveData);
 router.get('/query', dataQueryController.queryData); 
+router.delete('/deleteData', dataQueryController.deleteData);
 
 router.get('/:id' , connectionController.getConnection);
 
