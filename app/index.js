@@ -24,11 +24,11 @@ module.exports = class Application {
         const server = http.createServer(app);
         server.listen(process.env.APPLICATION_PORT , () => console.log(`Listening on port ${process.env.APPLICATION_PORT}...`));
 
-
         const processMessage = async (data) => {
             const { ts, name, value, tag } = data;
             await influxService.writePoint(name, { value }, { tag, ts });
           };
+          
         kafkaService.runConsumer(processMessage);
     }
 

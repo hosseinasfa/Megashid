@@ -11,7 +11,6 @@
   "license": "ISC",
   "dependencies": {
     "@influxdata/influxdb-client": "^1.33.2",
-    "@influxdata/influxdb-client-apis": "^1.33.2",
     "app-module-path": "^2.2.0",
     "auto-bind": "^4.0.0",
     "axios": "^1.6.8",

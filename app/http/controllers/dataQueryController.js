@@ -1,6 +1,5 @@
 const controller = require("app/http/controllers/controller");
 const { InfluxDB } = require('@influxdata/influxdb-client');
-const { DeleteAPI } = require('@influxdata/influxdb-client-apis');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -11,7 +10,6 @@ const bucket = process.env.INFLUX_BUCKET;
 
 const client = new InfluxDB({ url, token });
 const queryApi = client.getQueryApi(org);
-const deleteApi = new DeleteAPI(client);
 
 class dataQueryController extends controller {
 
@@ -46,37 +44,6 @@ async queryData (req, res) {
     });
   } catch (err) {
     return res.status(500).json({ error: 'Failed to query data from InfluxDB' });
-  }
-};
-
-
-
-async deleteData (req, res) {
-  const { measurement, tagKey, tagValue } = req.body;
-
-  if (!measurement) {
-    return res.status(400).json({ error: 'Measurement is required' });
-  }
-
-  const start = '1970-01-01T00:00:00Z';
-  const stop = new Date().toISOString();
-
-  const predicate = tagKey && tagValue ? `_measurement="${measurement}" AND ${tagKey}="${tagValue}"` : `_measurement="${measurement}"`;
-
-  try {
-    await deleteApi.postDelete({
-      org,
-      bucket,
-      body: {
-        start,
-        stop,
-        predicate,
-      },
-    });
-    res.status(200).json({ message: 'Data deleted successfully' });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to delete data from InfluxDB' });
   }
 };
 

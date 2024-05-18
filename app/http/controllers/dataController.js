@@ -1,7 +1,6 @@
 const controller = require("app/http/controllers/controller");
 const { Kafka } = require('kafkajs');
 const kafka = new Kafka({ clientId: 'my-app', brokers: ['localhost:9092'] });
-const producer = kafka.producer();
 const kafkaService = require("app/http/services/kafkaService")
 
 
@@ -10,14 +9,17 @@ class dataController extends controller {
     const { ts, name, value } = req.body;
 
   
+  if (!ts || !name || !value) {
+    return res.status(400).json({ error: 'Invalid data format' });
+  }
+
   const dataWithTags = {
     ts,
     name,
     value,
-    tag: 'my-tag', 
+    tag: 'my-tag',
   };
 
-  
   try {
     await kafkaService.sendMessage(dataWithTags);
     console.log('Data received and sent to Kafka')
