@@ -5,28 +5,30 @@ dotenv.config();
 const token = process.env.INFLUX_TOKEN;
 const org = process.env.INFLUX_ORG;
 const bucket = process.env.INFLUX_BUCKET;
-const client = new InfluxDB({ url: 'http://localhost:8086', token });
+const url = process.env.INFLUX_URL;
+const client = new InfluxDB({ url, token });
 
 const writeApi = client.getWriteApi(org, bucket, 'ns');
 
 
 
 class influxService {
-    async writePoint (measurement, fields, tags) {
-        const point = new Point(measurement);
-        for (const key in fields) {
-          point.floatField(key, fields[key]);
-        }
-        for (const key in tags) {
-          point.tag(key, tags[key]);
-        }
-        writeApi.writePoint(point);
-        writeApi.close().then(() => {
-          console.log('Data written to InfluxDB');
-        }).catch(e => {
-          console.error('Error writing data to InfluxDB', e);
-        });
-      };
+  async writePoint (measurement, fields, tags) {
+    try {
+      const point = new Point(measurement);
+      for (const key in fields) {
+        point.floatField(key, fields[key]);
+      }
+      for (const key in tags) {
+        point.tag(key, tags[key]);
+      }
+      await writeApi.writePoint(point);
+      await writeApi.flush();
+      console.log('Data written to InfluxDB');
+    } catch (e) {
+      console.error('Error writing data to InfluxDB', e);
+    }
+  };
 }
 
 

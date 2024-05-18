@@ -34,7 +34,7 @@ class connectionController extends controller {
     }
   }
 
-  async showConnections(req, res, next) {
+  async getAllConnections(req, res, next) {
     let connections = await Connection.find();
     res.json(connections);
   }

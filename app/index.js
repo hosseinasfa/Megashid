@@ -29,7 +29,7 @@ module.exports = class Application {
         // تعریف تابع پردازش پیام‌ها
         const processMessage = async (data) => {
             const { ts, name, value, tag } = data;
-            influxService.writePoint(name, { value }, { tag, ts });
+            await influxService.writePoint(name, { value }, { tag, ts });
           };
           
         kafkaService.runConsumer(processMessage);
