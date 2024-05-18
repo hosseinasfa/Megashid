@@ -22,7 +22,6 @@ class connectionController extends controller {
       let newConnection = new Connection({
         name,
         value,
-        slug: name,
         ts,
       });
 
@@ -51,7 +50,6 @@ class connectionController extends controller {
           $set: {
             name,
             value,
-            slug: name,
             ts,
           },
         }
@@ -77,6 +75,11 @@ class connectionController extends controller {
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
     }
+  }
+
+  async getConnection(req , res) {
+    let connection = await Connection.findById(req.params.id).select('createdAt name value');
+    res.json(connection);
   }
 }
 

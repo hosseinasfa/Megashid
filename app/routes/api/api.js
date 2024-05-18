@@ -18,7 +18,9 @@ router.put('/update/:id' ,connectionValidator.handle() ,connectionController.upd
 router.delete('/delete/:id' , connectionController.destroy);
 router.get('/' , connectionController.getAllConnections);
 router.post('/data/:connectionName', dataController.receiveData);
-router.get('/query', dataQueryController.queryData); // مسیر جدید برای دریافت داده‌ها
+router.get('/query', dataQueryController.queryData); 
+
+router.get('/:id' , connectionController.getConnection);
 
 
 module.exports = router;
