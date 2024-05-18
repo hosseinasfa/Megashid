@@ -10,7 +10,7 @@ const dataQueryController = require('app/http/controllers/dataQueryController')
 // Validators
 const connectionValidator = require('app/http/validators/connectionValidator');
 
-// router.get('/' , connectionController.index);
+router.get('/main' , connectionController.index);
 
 //Connection Routes
 router.post('/create' , connectionValidator.handle() ,connectionController.create);

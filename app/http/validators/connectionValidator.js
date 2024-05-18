@@ -1,6 +1,5 @@
 const validator = require('./validator');
 const { body, validationResult } = require('express-validator');
-const Connection = require('app/models/connection');
 
 class connectionValidator extends validator {
     handle() {

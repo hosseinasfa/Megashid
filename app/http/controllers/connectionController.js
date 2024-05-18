@@ -1,6 +1,6 @@
 const controller = require("app/http/controllers/controller");
 const Connection = require("app/models/connection");
-const { body, validationResult } = require("express-validator");
+const { validationResult } = require("express-validator");
 const { createRandomName } = require("app/http/services/randomName");
 
 class connectionController extends controller {
@@ -18,7 +18,6 @@ class connectionController extends controller {
       let { value } = req.body;
       const name = createRandomName();
 
-      //create connection
       let newConnection = new Connection({
         name,
         value,
@@ -42,7 +41,6 @@ class connectionController extends controller {
     const name = createRandomName();
 
     try {
-      //update connection
       const updatedConnection = await Connection.findByIdAndUpdate(
         req.params.id,
         {

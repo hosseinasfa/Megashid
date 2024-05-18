@@ -1,5 +1,5 @@
 const controller = require("app/http/controllers/controller");
-const { InfluxDB, QueryApi } = require('@influxdata/influxdb-client');
+const { InfluxDB } = require('@influxdata/influxdb-client');
 const dotenv = require('dotenv');
 dotenv.config();
 
