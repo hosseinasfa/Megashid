@@ -22,9 +22,9 @@ async queryData (req, res) {
 
   const query = `
     from(bucket: "${bucket}")
-      |&gt; range(start: ${start}, stop: ${end})
-      |&gt; filter(fn: (r) =&gt; r._measurement == "${name}")
-      |&gt; pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
+      |> range(start: ${start}, stop: ${end})
+      |> filter(fn: (r) => r._measurement == "${name}")
+      |> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")
   `;
 
   try {
