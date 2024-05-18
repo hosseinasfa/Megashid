@@ -15,14 +15,13 @@ class connectionController extends controller {
         return res.status(400).json({ errors: errors.array() });
       }
 
-      let { value , ts } = req.body;
+      let { value } = req.body;
       const name = createRandomName();
 
       //create connection
       let newConnection = new Connection({
         name,
         value,
-        ts,
       });
 
       await newConnection.save();
@@ -39,7 +38,7 @@ class connectionController extends controller {
   }
 
   async update(req, res, next) {
-    let { value , ts } = req.body;
+    let { value } = req.body;
     const name = createRandomName();
 
     try {
@@ -50,7 +49,6 @@ class connectionController extends controller {
           $set: {
             name,
             value,
-            ts,
           },
         }
       );
