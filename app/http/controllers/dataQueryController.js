@@ -80,6 +80,8 @@ async deleteData (req, res) {
   }
 };
 
+
+
 }
 
 module.exports = new dataQueryController();
