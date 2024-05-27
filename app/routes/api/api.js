@@ -20,7 +20,10 @@ router.delete('/delete/:id' , connectionController.destroy);
 router.get('/' , connectionController.getAllConnections);
 router.post('/data/:connectionName', dataValidator.handle() , dataController.receiveData);
 router.get('/query', dataQueryController.queryData);
+router.get('/getAllData', dataQueryController.getAllData);
 router.delete('/deleteData', dataQueryController.deleteData);
+router.delete('/deleteAllData', dataQueryController.deleteAllData);
+
 
 
 router.get('/:id' , connectionController.getConnection);
