@@ -17,6 +17,7 @@ class dataQueryController extends controller {
 
 async queryData (req, res) {
   const { start, end, name } = req.query;
+  const { connectName } = req.params;
 
   if (!start || !end || !name) {
     return res.status(400).json({ error: 'Start, end, and name are required' });

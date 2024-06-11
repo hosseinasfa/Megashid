@@ -2,6 +2,7 @@ const controller = require("app/http/controllers/controller");
 const { Kafka } = require('kafkajs');
 const kafka = new Kafka({ clientId: 'my-app', brokers: ['localhost:9092'] });
 const kafkaService = require("app/http/services/kafkaService");
+const influxService = require("app/http/services/influxService");
 const Connection = require("app/models/connection");
 
 
@@ -31,6 +32,13 @@ class dataController extends controller {
         await kafkaService.sendMessage(dataWithTags);
         console.log('Data received and sent to Kafka')
         res.status(200).json({ message: 'Data received and sent to Kafka' });
+
+        const processMessage = async (dataWithTags) => {
+          const { ts, name, value, tag } = dataWithTags;
+          await influxService.writePoint(name, { value }, { tag, ts });
+        };
+        kafkaService.runConsumer(processMessage);
+
       } catch (err) {
         res.status(500).json({ error: 'Failed to send data to Kafka' });
       }

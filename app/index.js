@@ -5,9 +5,6 @@ const mongoose = require ('mongoose');
 const dotenv = require('dotenv');
 dotenv.config();
 
-const kafkaService = require('app/http/services/kafkaService');
-const influxService = require('app/http/services/influxService');
-
 
 module.exports = class Application {
     constructor () {
@@ -24,12 +21,7 @@ module.exports = class Application {
         const server = http.createServer(app);
         server.listen(process.env.APPLICATION_PORT , () => console.log(`Listening on port ${process.env.APPLICATION_PORT}...`));
 
-        const processMessage = async (data) => {
-            const { ts, name, value, tag } = data;
-            await influxService.writePoint(name, { value }, { tag, ts });
-          };
-          
-        kafkaService.runConsumer(processMessage);
+        
     }
 
     async setMongoConnection(){
