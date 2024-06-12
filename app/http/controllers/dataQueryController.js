@@ -35,7 +35,11 @@ async queryData (req, res) {
     queryApi.queryRows(query, {
       next(row, tableMeta) {
         const o = tableMeta.toObject(row);
-        data.push(o);
+        data.push({
+          ts: o.ts,
+          name: o._measurement,
+          value: o.value,
+        });
       },
       error(error) {
         console.error(error);
