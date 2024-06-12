@@ -1,11 +1,13 @@
-const { Kafka } = require('kafkajs');
+const { Kafka , Partitioners  } = require('kafkajs');
 const dotenv = require('dotenv');
 
 dotenv.config();
 
 const kafka = new Kafka({ clientId: 'my-consumer-app', brokers: [process.env.KAFKA_BROKER] });
 
-const producer = kafka.producer();
+const producer = kafka.producer({
+  createPartitioner: Partitioners.LegacyPartitioner,
+});
 
 
 class kafkaService {
