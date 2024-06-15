@@ -6,6 +6,7 @@ const axios = require('axios');
 const connectionController = require('app/http/controllers/connectionController');
 const dataController = require('app/http/controllers/dataController');
 const dataQueryController = require('app/http/controllers/dataQueryController')
+const redisController = require('app/http/controllers/redisController');
 
 
 // Validators
@@ -33,6 +34,8 @@ router.get('/query', dataQueryController.queryData);
 router.get('/getAllData', dataQueryController.getAllData);
 router.delete('/deleteData', dataQueryController.deleteData);
 router.delete('/deleteAllData', dataQueryController.deleteAllData);
+router.post('/redis', redisController.test);
+
 
 
 
